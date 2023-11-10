@@ -1,4 +1,8 @@
-<?php
+<?php 
+    //validate access
+    defined('CONTROL') or die('Access denied');
+
+// ficheiro não utilizado - lógica passou para INDEX
 
 $p = $_GET['p'];
 

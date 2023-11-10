@@ -1,3 +1,7 @@
+<?php 
+    //validate access
+    defined('CONTROL') or die('Access denied');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

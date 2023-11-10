@@ -1,3 +1,7 @@
+<?php 
+    //validate access
+    defined('CONTROL') or die('Access denied');
+?>
 </main>
 <footer class="bg-dark text-white text-center p-3 mt-auto">
     Contacts APP &copy; <?= date('Y'); ?>
