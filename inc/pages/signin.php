@@ -1,1 +1,1 @@
-REGISTO
+LOGIN

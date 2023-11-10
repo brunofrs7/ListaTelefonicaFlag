@@ -23,4 +23,4 @@
     <!-- Meu CSS -->
     <link rel="stylesheet" href="../inc/css/style.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">

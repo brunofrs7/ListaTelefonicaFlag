@@ -1,6 +1,6 @@
 </main>
-<footer>
-    Contacts APP &copy; <?= date('Y') ?>
+<footer class="bg-dark text-white text-center p-3 mt-auto">
+    Contacts APP &copy; <?= date('Y'); ?>
 </footer>
     
     <!-- Bootstrap JS -->
