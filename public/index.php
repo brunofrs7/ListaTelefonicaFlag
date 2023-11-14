@@ -28,7 +28,8 @@ if (isset($_SESSION['id']) && !in_array($page, $allowed_routes)) {
 }
 
 // load database
-// ...
+require_once __DIR__ . "/../inc/db/config.php";
+require_once __DIR__ . "/../inc/db/database.php";
 
 // load functions
 // ...

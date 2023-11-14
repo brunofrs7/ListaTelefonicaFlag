@@ -5,3 +5,17 @@ body{
 .img-logo{
     max-width: 100px;
 }
+
+.form-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-box{
+    width: 400px;
+    padding: 40px;
+    background-color: #3d3d3d;
+    border-radius: 10px;
+    color: white;
+}
