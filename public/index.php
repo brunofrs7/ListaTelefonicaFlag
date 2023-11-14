@@ -32,7 +32,7 @@ require_once __DIR__ . "/../inc/db/config.php";
 require_once __DIR__ . "/../inc/db/database.php";
 
 // load functions
-// ...
+require_once __DIR__ . "/../inc/utils/functions.php";
 
 // load page parts
 require_once __DIR__ . '/../inc/content/head.php';

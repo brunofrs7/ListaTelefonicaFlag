@@ -5,6 +5,7 @@
 return [
     '404',
     'signup',
+    'signup_submit',
     'signin',
     'signin_submit'
 ];

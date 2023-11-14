@@ -26,5 +26,3 @@ if($res['status'] == 'success'){
 }else{
     header('Location: ?p=signin');
 }
-
-
