@@ -1,0 +1,5 @@
+Criar rota new
+Tabela colocar dados de cada contacto (ciclo)
+Imagem do contacto na tabela
+Rotas para enviar email, editar e eliminar
+Implementar search

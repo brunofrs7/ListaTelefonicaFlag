@@ -120,11 +120,17 @@ class database
     //  contacts
     // =============================================================
 
-    public function selectContactsByUserID()
+    public function selectContactsByUserID($user_id)
     {
+        $params = [
+            ':user_id' => $user_id
+        ];
+
+        $sql = "SELECT * FROM contact WHERE user_id = :user_id AND deleted_at IS NULL ORDER BY name ASC";
+        return $this->query($sql, $params);
     }
 
-    public function selectContactsByID()
+    public function selectContactByID()
     {
     }
 
