@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $email = $_POST['text_email'] ?? null;
 $password = $_POST['text_password'] ?? null;
 
-if(empty($email) || empty($password)){
+if (empty($email) || empty($password)) {
     $_SESSION['error'] = 'Please insert both fields';
     header('Location: ?p=signin');
     exit;
@@ -21,8 +21,8 @@ if(empty($email) || empty($password)){
 $db = new database();
 $res = $db->signin($email, $password);
 
-if($res['status'] == 'success'){
+if ($res['status'] == 'success') {
     header('Location: ?p=contacts');
-}else{
+} else {
     header('Location: ?p=signin');
 }

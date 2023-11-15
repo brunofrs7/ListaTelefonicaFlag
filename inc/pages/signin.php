@@ -27,16 +27,19 @@ unset($_SESSION['warning']);
             <div class="mb-3">
                 <button type="submit" class="btn btn-dark w-100">Sign in</button>
             </div>
+
             <?php if (!empty($error)) : ?>
                 <div class="alert alert-danger mt-3 p-2 text-center" role="alert">
                     <?= $error ?>
                 </div>
             <?php endif; ?>
+
             <?php if (!empty($warning)) : ?>
                 <div class="alert alert-warning mt-3 p-2 text-center" role="alert">
                     <?= $warning ?>
                 </div>
             <?php endif; ?>
+
         </form>
     </div>
 </div>

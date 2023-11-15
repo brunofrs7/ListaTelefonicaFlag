@@ -7,5 +7,6 @@ return [
     'signup',
     'signup_submit',
     'signin',
-    'signin_submit'
+    'signin_submit', 
+    'validate',
 ];

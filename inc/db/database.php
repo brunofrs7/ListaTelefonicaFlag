@@ -11,12 +11,15 @@ class database
             $stmt = $pdo->prepare($sql);
             $stmt->execute($params);
             $lastID = $pdo->lastInsertId();
+            $affectedRows = $stmt->rowCount();
 
             $results = $stmt->fetchAll(PDO::FETCH_CLASS);
+
             return [
                 'status' => 'success',
                 'data' => $results,
-                'lastID' => $lastID
+                'lastID' => $lastID,
+                'affectedRows' => $affectedRows
             ];
         } catch (PDOException $e) {
             return [
@@ -26,7 +29,6 @@ class database
         }
     }
 
-
     // ==============================================================================
     // users
     // ==============================================================================
@@ -34,17 +36,25 @@ class database
     public function signin($email, $password)
     {
         // check user in database
-        $params = [':email' => $email];
+        $params = [
+            ':email' => $email
+        ];
 
-        $sql = "SELECT * FROM user WHERE email = :email";
+        $sql = "SELECT * FROM user WHERE email = :email AND deleted_at IS NULL";
         $result = $this->query($sql, $params);
 
+        // for debug
+        //echo "<pre>";
+        //die(print_r($result));
+
+        // check if the query return an error
         if ($result['status'] == 'error') {
             $_SESSION['error'] = 'Invalid credentials';
             header('Location: ?p=signin');
             exit;
         }
 
+        // check if there isn't a user with this email
         if (count($result['data']) == 0) {
             $_SESSION['error'] = 'Invalid credentials';
             header('Location: ?p=signin');
@@ -52,24 +62,25 @@ class database
         }
 
         // check is password in correct for the selected user
-        if(!password_verify($password, $result['data'][0]->password)){
+        if (!password_verify($password, $result['data'][0]->password)) {
             $_SESSION['error'] = 'Invalid credentials';
             header('Location: ?p=signin');
             exit;
         }
 
-        if($result['data'][0]->email_valid == 0){
+        // check if the account have been validated by email click
+        if ($result['data'][0]->email_valid == 0) {
             $_SESSION['warning'] = 'Please check your email to validate account';
             header('Location: ?p=signin');
             exit;
         }
 
-        
-        if($result['data'][0]->deleted_at != null){
+        // check if the account has not been deleted 
+        /*if ($result['data'][0]->deleted_at != null) {
             $_SESSION['error'] = 'Invalid credentials';
             header('Location: ?p=signin');
             exit;
-        }
+        }*/
 
         $_SESSION['id'] = $result['data'][0]->id;
     }
@@ -92,8 +103,17 @@ class database
         return $this->query($sql, $params);
     }
 
-    public function validate()
+    public function validate($email_link)
     {
+        $params = [
+            ':email_link'   => $email_link,
+        ];
+
+        $sql = "UPDATE user 
+                SET email_link = NULL, email_valid = 1, email_validated_at = NOW()
+                WHERE email_link = :email_link";
+
+        return $this->query($sql, $params);
     }
 
     // =============================================================
