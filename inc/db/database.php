@@ -130,12 +130,29 @@ class database
         return $this->query($sql, $params);
     }
 
-    public function selectContactByID()
+    public function selectContactByID($id, $user_id)
     {
+        $params = [
+            ':id' => $id,
+            ':user_id' => $user_id
+        ];
+        $sql = "SELECT * FROM contact WHERE id = :id AND user_id = :user_id";
+        return $this->query($sql, $params);
     }
 
-    public function insertContact()
+    public function insertContact($name, $phone, $email, $photo, $user_id)
     {
+        $params = [
+            ':name' => $name,
+            ':phone' => $phone,
+            ':email' => $email,
+            ':photo' => $photo,
+            ':user_id' => $user_id
+        ];
+
+        $sql = "INSERT INTO contact (name, phone, email, photo, created_at, user_id)
+                VALUES (:name, :phone, :email, :photo, NOW(), :user_id)";
+        return $this->query($sql, $params);
     }
 
     public function updateContact()

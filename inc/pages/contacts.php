@@ -40,23 +40,25 @@ $count = count($contacts);
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="align-middle">
-                    <img class="table-img" src="../inc/img/logo.png" alt="">
-                </td>
-                <td class="align-middle">Nome</td>
-                <td class="align-middle">911222333</td>
-                <td class="align-middle">email@email.pt</td>
-                <td class="align-middle">
-                    <a href="" class="btn btn-outline-light me-2"><i class="bi bi-envelope-plus"></i></a>
-                    <a href="" class="btn btn-outline-light me-2"><i class="bi bi-pencil-square"></i></a>
-                    <a href="" class="btn btn-outline-light"><i class="bi bi-trash"></i></a>
-                </td>
-            </tr>
+            <?php foreach ($contacts as $contact) : ?>
+                <tr>
+                    <td class="align-middle">
+                        <img class="table-img" src="../inc/img/logo.png" alt="">
+                    </td>
+                    <td class="align-middle"><?= $contact->name ?></td>
+                    <td class="align-middle"><?= $contact->phone ?></td>
+                    <td class="align-middle"><?= $contact->email ?></td>
+                    <td class="align-middle">
+                        <a href="?p=email&id=<?= $contact->id ?>" class="btn btn-outline-light me-2"><i class="bi bi-envelope-plus"></i></a>
+                        <a href="?p=edit&id=<?= $contact->id ?>" class="btn btn-outline-light me-2"><i class="bi bi-pencil-square"></i></a>
+                        <a href="?p=delete&id=<?= $contact->id ?>" class="btn btn-outline-light"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 
-<!-- MESSAGES CONTACTS -->
+    <!-- MESSAGES CONTACTS -->
 <?php elseif (isset($_GET['search'])) : ?>
     <div class="container text-center">
         <p class="opacity-50 mt-5">There are no contacts registered according to the filter</p>

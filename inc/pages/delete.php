@@ -1,0 +1,1 @@
+página com 2 botões, um para confirmar e outro para cancelar a eliminação
