@@ -136,7 +136,7 @@ class database
             ':id' => $id,
             ':user_id' => $user_id
         ];
-        $sql = "SELECT * FROM contact WHERE id = :id AND user_id = :user_id";
+        $sql = "SELECT * FROM contact WHERE id = :id AND user_id = :user_id AND deleted_at IS NULL";
         return $this->query($sql, $params);
     }
 
@@ -155,15 +155,52 @@ class database
         return $this->query($sql, $params);
     }
 
-    public function updateContact()
+    public function updateContact($id, $name, $phone, $email, $photo, $user_id)
+    {
+        $params = [
+            ':id' => $id,
+            ':name' => $name,
+            ':phone' => $phone,
+            ':email' => $email,
+            ':photo' => $photo,
+            ':user_id' => $user_id
+        ];
+
+        $sql = "UPDATE contact 
+                SET name = :name, phone = :phone, email = :email, photo = :photo, updated_at = NOW()
+                WHERE id = :id AND user_id = :user_id";
+
+        return $this->query($sql, $params);
+    }
+
+    public function updateContactRemovePhoto()
     {
     }
 
-    public function updateContactRemoveImage()
+    public function softDeleteContact($id, $user_id)
     {
+        $params = [
+            ':id' => $id,
+            ':user_id' => $user_id
+        ];
+
+        $sql = "UPDATE contact 
+                SET deleted_at = NOW()
+                WHERE id = :id AND user_id = :user_id";
+
+        return $this->query($sql, $params);
     }
 
-    public function deleteContact()
+    public function deleteContact($id, $user_id)
     {
+        $params = [
+            ':id' => $id,
+            ':user_id' => $user_id
+        ];
+
+        $sql = "DELETE FROM contact
+                WHERE id = :id AND user_id = :user_id";
+
+        return $this->query($sql, $params);
     }
 }

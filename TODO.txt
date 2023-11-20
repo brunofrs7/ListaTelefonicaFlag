@@ -3,6 +3,22 @@ CONTACTOS
 - Implementar search
 
 NEW
-formulário com campos para inserir 
-- name, phone, email
 - photo (depois)
+
+EDIT
+- edição da imagem (carregamento, eliminação)
+
+DELETE
+- implementar
+
+EMAIL
+- implementar
+
+DATABASE
+- selectContactsByUserID - alterar para permitir search
+- insertContact - alterar para gerir photo
+- updateContact - alterar para gerir photo
+- updateContactRemovePhoto - implementar
+
+PROFILE
+- implementar
