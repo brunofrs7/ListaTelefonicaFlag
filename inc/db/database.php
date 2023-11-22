@@ -83,6 +83,8 @@ class database
         }*/
 
         $_SESSION['id'] = $result['data'][0]->id;
+        //$_SESSION['name'] = $result['data'][0]->name;
+        //$_SESSION['email'] = $result['data'][0]->email;
     }
 
     public function signup($email, $name, $password)
@@ -113,6 +115,16 @@ class database
                 SET email_link = NULL, email_valid = 1, email_validated_at = NOW()
                 WHERE email_link = :email_link";
 
+        return $this->query($sql, $params);
+    }
+
+    public function selectUserByID($id)
+    {
+        $params = [
+            ':id' => $id
+        ];
+
+        $sql = "SELECT name, email FROM user WHERE id = :id AND deleted_at IS NULL";
         return $this->query($sql, $params);
     }
 

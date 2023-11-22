@@ -20,15 +20,20 @@ if (empty($text_to_name) || empty($text_to_address) || empty($text_subject) || e
     header("Location: ?p=email&id=$text_id");
     exit;
 }
+$user_id = $_SESSION['id'] ?? null;
 
-// envio do email
-// dados de envio: 
-// remetente:    NOME E EMAIL DO UTILIZADOR DA SESSÃO           - FALTA!!
-// destinatário: NOME E EMAIL DO CONTACTO PASSADO POR POST 
-// assunto: passado por POST
-// mensagem: passada por POST
+if(empty($user_id)){
+    header("Location: ?p=404");
+    exit;
+}
 
-$res = false;   // substituir por envio de email com info de resultado 
+$db = new database();
+$res = $db->selectUserByID($user_id);
+
+$text_from_name = $res['data'][0]->name;
+$text_from_address = $res['data'][0]->email;
+
+require_once('../inc/utils/sendMail.php');
 
 if ($res == true) {
     $_SESSION['success'] = "Message successfully sended";
