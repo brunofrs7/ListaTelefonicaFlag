@@ -1,0 +1,5 @@
+1. criar EMAIL
+2. abrir Gerir Conta Google
+3. abrir opções de Segurança
+4. Ativar verificação em 2 passos
+5. Nas "Palavras-passe de apps" criar nova senha
