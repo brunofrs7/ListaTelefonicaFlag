@@ -23,6 +23,11 @@ $count = count($contacts);
     </div>
     <div class="col text-end">
         <a href="?p=new" class="btn btn-outline-dark"><i class="bi bi-person-add me-2"></i>New Contact</a>
+        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#new-contact-modal">
+            <i class="bi bi-person-add me-2"></i>
+            New Contact (modal)
+        </button>
+        <?php require_once('new_modal.php') ?>
     </div>
 </div>
 <hr>
@@ -52,6 +57,10 @@ $count = count($contacts);
                         <a href="?p=email&id=<?= $contact->id ?>" class="btn btn-outline-light me-2"><i class="bi bi-envelope-plus"></i></a>
                         <a href="?p=edit&id=<?= $contact->id ?>" class="btn btn-outline-light me-2"><i class="bi bi-pencil-square"></i></a>
                         <a href="?p=delete&id=<?= $contact->id ?>" class="btn btn-outline-light"><i class="bi bi-trash"></i></a>
+                        <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#delete-contact-modal<?= $contact->id ?>">
+                            <i class="bi bi-trash"></i>M
+                        </button>
+                        <?php require('delete_modal.php') ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
