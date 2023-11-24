@@ -1,4 +1,7 @@
 <?php
+//validate access
+defined('CONTROL') or die('Access denied');
+
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
@@ -28,7 +31,12 @@ try {
 
     //Recipients
     $mail->setFrom($gmail_user, $text_from_name);
-    $mail->addAddress($gmail_user, $text_to_name);
+    
+    if (isset($text_to_name)) {
+        $mail->addAddress($gmail_user, $text_to_name);
+    } else {
+        $mail->addAddress($gmail_user);
+    }
 
     // REAL PARAMETERS
     //$mail->setFrom($text_from_address, $text_from_name);
@@ -50,9 +58,9 @@ try {
     $mail->AltBody = $text_message;
 
     $mail->send();
-    $res = true;
+    $res_email = true;
     //echo 'Message has been sent';
 } catch (Exception $e) {
-    $res = false;
+    $res_email = false;
     //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }

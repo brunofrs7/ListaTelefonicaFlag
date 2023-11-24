@@ -35,7 +35,7 @@ $text_from_address = $res['data'][0]->email;
 
 require_once('../inc/utils/sendMail.php');
 
-if ($res == true) {
+if ($res_email == true) {
     $_SESSION['success'] = "Message successfully sended";
 } else {
     $_SESSION['error'] = "Error sending messagem";

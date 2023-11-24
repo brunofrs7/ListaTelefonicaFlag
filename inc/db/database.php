@@ -87,10 +87,10 @@ class database
         //$_SESSION['email'] = $result['data'][0]->email;
     }
 
-    public function signup($email, $name, $password)
+    public function signup($email, $name, $password, $email_link)
     {
         $password_enc = password_hash($password, PASSWORD_DEFAULT);
-        $email_link = functions::generateLink();
+        //$email_link = functions::generateLink();
 
         $params = [
             ':email'        => $email,
@@ -103,6 +103,38 @@ class database
                 VALUES (:email, :password, :name, :email_link, NOW())";
 
         return $this->query($sql, $params);
+    }
+
+    public function validateSignupLinkExists($email_link)
+    {
+        $params = [
+            ':email_link' => $email_link,
+        ];
+
+        $sql = "SELECT COUNT(email_link) AS quantity FROM user WHERE email_link = :email_link";
+
+        $res = $this->query($sql, $params);
+
+        if ($res['data'][0]->quantity == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public function validateRecoverLinkExists($email_recover)
+    {
+        $params = [
+            ':email_recover' => $email_recover,
+        ];
+
+        $sql = "SELECT COUNT(email_recover) AS quantity FROM user WHERE email_recover = :email_recover";
+
+        $res = $this->query($sql, $params);
+
+        if ($res['data'][0]->quantity == 0) {
+            return true;
+        }
+        return false;
     }
 
     public function validate($email_link)
@@ -125,6 +157,37 @@ class database
         ];
 
         $sql = "SELECT name, email FROM user WHERE id = :id AND deleted_at IS NULL";
+        return $this->query($sql, $params);
+    }
+
+    public function generateRecoverPasswordLink($email, $email_recover)
+    {
+        $params = [
+            ':email'           => $email,
+            ':email_recover'   => $email_recover,
+        ];
+
+        $sql = "UPDATE user 
+                SET email_recover = :email_recover, updated_at = NOW()
+                WHERE email = :email";
+
+        return $this->query($sql, $params);
+    }
+
+    public function updatePassword($email, $email_recover, $new_password)
+    {
+        $password_enc = password_hash($new_password, PASSWORD_DEFAULT);
+
+        $params = [
+            ':email'           => $email,
+            ':password'        => $password_enc,
+            ':email_recover'   => $email_recover,
+        ];
+
+        $sql = "UPDATE user 
+                SET email_recover = NULL, password = :password, updated_at = NOW()
+                WHERE email = :email AND email_recover = :email_recover ";
+
         return $this->query($sql, $params);
     }
 

@@ -9,4 +9,6 @@ return [
     'signin',
     'signin_submit', 
     'validate',
+    'recover_password',
+    'recover_password_submit',
 ];

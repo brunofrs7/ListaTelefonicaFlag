@@ -13,22 +13,15 @@ unset($_SESSION['warning']);
 
 <div class="form-wrapper">
     <div class="form-box">
-        <h3 class="text-center">Sign in</h3>
+        <h3 class="text-center">Recover password</h3>
         <hr>
-        <form action="?p=signin_submit" method="post">
+        <form action="?p=recover_password_submit" method="post">
             <div class="mb-3">
                 <label for="text_email" class="form-label">Email:</label>
                 <input type="email" name="text_email" id="text_email" class="form-control" placeholder="Insert your email" required>
             </div>
             <div class="mb-3">
-                <label for="text_password" class="form-label">Password:</label>
-                <input type="password" name="text_password" id="text_password" class="form-control" placeholder="Insert your password" required>
-            </div>
-            <div class="mb-3">
-                <a class="text-white" href="?p=recover_password">Forgot password?</a>
-            </div>
-            <div class="mb-3">
-                <button type="submit" class="btn btn-dark w-100">Sign in</button>
+                <button type="submit" class="btn btn-dark w-100">Recover password</button>
             </div>
 
             <?php if (!empty($error)) : ?>
@@ -36,7 +29,7 @@ unset($_SESSION['warning']);
                     <?= $error ?>
                 </div>
             <?php endif; ?>
-
+            
             <?php if (!empty($warning)) : ?>
                 <div class="alert alert-warning mt-3 p-2 text-center" role="alert">
                     <?= $warning ?>

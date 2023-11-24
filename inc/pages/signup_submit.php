@@ -26,10 +26,38 @@ if ($password != $password2) {
     exit;
 }
 
+$new_link_valid = false;
+$email_link = "";
 $db = new database();
-$res = $db->signup($email, $name, $password);
 
-if ($res['status'] == 'success') {
+while(!$new_link_valid){
+    $email_link = functions::generateLink();
+    $new_link_valid = $db->validateSignupLinkExists($email_link);
+}
+
+$email_link = functions::generateLink();
+
+$db = new database();
+$res = $db->signup($email, $name, $password, $email_link);
+
+if ($res['status'] == 'error') {
+    $_SESSION['error'] = "Error signing up";
+    header('Location: ?p=signup');
+    exit();
+}
+
+//SEND MAIL
+$text_to_name = $name;
+$text_to_address = $email;
+$text_from_name = "Contacts APP";
+$text_from_address = "listacontactos573@gmail.com";
+$text_subject = "Activate account";
+//$text_message = "Click <a href=\"http://localhost/ListaTelefonicaFlag/public/?p=validate&email_link=$email_link\">here</a> to activate your account";
+$text_message = 'Click <a href="http://localhost/ListaTelefonicaFlag/public/?p=validate&email_link=' . $email_link . '">here</a> to activate your account';
+
+require_once('../inc/utils/sendMail.php');
+
+if ($res_email == true) {
     $_SESSION['warning'] = 'Verify your email to activate your account';
     header('Location: ?p=signin');
 } else {

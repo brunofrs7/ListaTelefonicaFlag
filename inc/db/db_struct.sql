@@ -9,8 +9,8 @@ CREATE TABLE user(
     photo VARCHAR(20),
     email_valid INT DEFAULT 0,
     email_validated_at DATETIME,
-    email_link VARCHAR(100),
-    email_recover VARCHAR(100),
+    email_link VARCHAR(100) UNIQUE,
+    email_recover VARCHAR(100) UNIQUE,
     created_at DATETIME,
     updated_at DATETIME,
     deleted_at DATETIME

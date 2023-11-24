@@ -8,9 +8,6 @@ NEW
 EDIT
 - edição da imagem (carregamento, eliminação)
 
-EMAIL
-- implementar
-
 DATABASE
 - selectContactsByUserID - alterar para permitir search
 - insertContact - alterar para gerir photo
