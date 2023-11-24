@@ -136,6 +136,36 @@ class database
         }
         return false;
     }
+    public function userEmailExists($email)
+    {
+        $params = [
+            ':email' => $email,
+        ];
+
+        $sql = "SELECT COUNT(email) AS quantity FROM user WHERE email = :email";
+
+        $res = $this->query($sql, $params);
+
+        if ($res['data'][0]->quantity == 1) {
+            return true;
+        }
+        return false;
+    }
+    public function recoverLinkExists($email_recover)
+    {
+        $params = [
+            ':email_recover' => $email_recover,
+        ];
+
+        $sql = "SELECT COUNT(email_recover) AS quantity FROM user WHERE email_recover = :email_recover";
+
+        $res = $this->query($sql, $params);
+
+        if ($res['data'][0]->quantity == 1) {
+            return true;
+        }
+        return false;
+    }
 
     public function validate($email_link)
     {
@@ -174,19 +204,18 @@ class database
         return $this->query($sql, $params);
     }
 
-    public function updatePassword($email, $email_recover, $new_password)
+    public function updatePassword($email_recover, $new_password)
     {
         $password_enc = password_hash($new_password, PASSWORD_DEFAULT);
 
         $params = [
-            ':email'           => $email,
             ':password'        => $password_enc,
             ':email_recover'   => $email_recover,
         ];
 
         $sql = "UPDATE user 
                 SET email_recover = NULL, password = :password, updated_at = NOW()
-                WHERE email = :email AND email_recover = :email_recover ";
+                WHERE email_recover = :email_recover ";
 
         return $this->query($sql, $params);
     }

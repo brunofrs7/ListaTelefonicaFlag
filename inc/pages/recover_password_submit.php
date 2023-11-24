@@ -17,18 +17,31 @@ if (empty($text_to_address)) {
     exit;
 }
 
+$db = new database();
+$email_exists = $db->userEmailExists($text_to_address);
+
+if(!$email_exists){
+    //$_SESSION['success'] = "Check your email to recover password";
+    $_SESSION['error'] = "Email not exists in APP";
+    header("Location: ?p=recover_password");
+    exit;
+}
 
 $new_link_valid = false;
 $email_recover = "";
-$db = new database();
 
 while(!$new_link_valid){
     $email_recover = functions::generateLink();
     $new_link_valid = $db->validateRecoverLinkExists($email_recover);
 }
 
-$res = $db->generateRecoverPasswordLink($email, $email_recover);
+$res = $db->generateRecoverPasswordLink($text_to_address, $email_recover);
 
+if ($res['status'] == 'error') {
+    $_SESSION['error'] = "Error signing up";
+    header('Location: ?p=recover_password');
+    exit();
+}
 
 $text_from_name = "Contacts APP";
 $text_from_address = "listacontactos573@gmail.com";
@@ -38,10 +51,6 @@ $text_message = 'Click <a href="http://localhost/ListaTelefonicaFlag/public/?p=n
 
 require_once('../inc/utils/sendMail.php');
 
-if ($res_email == true) {
-    $_SESSION['success'] = "Message successfully sended";
-} else {
-    $_SESSION['error'] = "Error sending messagem";
-}
-header("Location: ?p=email&id=$text_id");
+$_SESSION['success'] = "Check your email to recover password";
+header("Location: ?p=recover_password");
 
