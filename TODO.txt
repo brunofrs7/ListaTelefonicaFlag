@@ -1,16 +1,7 @@
-CONTACTOS
-- Imagem do contacto na tabela
-- Implementar search
-
-NEW
-- photo (depois)
-
 EDIT
 - edição da imagem (carregamento, eliminação)
 
 DATABASE
-- selectContactsByUserID - alterar para permitir search
-- insertContact - alterar para gerir photo
 - updateContact - alterar para gerir photo
 - updateContactRemovePhoto - implementar
 
@@ -19,3 +10,4 @@ PROFILE
 
 LOG
 - implementar
+

@@ -4,8 +4,14 @@ defined('CONTROL') or die('Access denied');
 
 $user_id = $_SESSION['id'];
 
+$search = $_GET['search'] ?? null;
+
 $db = new database();
-$res = $db->selectContactsByUserID($user_id);
+if (empty($search)) {
+    $res = $db->selectContactsByUserID($user_id);
+} else {
+    $res = $db->selectContactsByUserID($user_id, $search);
+}
 
 $contacts = $res['data'];
 $count = count($contacts);
@@ -15,10 +21,12 @@ $count = count($contacts);
 <div class="row">
     <div class="col">
         <?php if ($count > 0) : ?>
-            <div class="d-flex">
-                <input type="text" name="text_search" id="text-search" class="form-control" placeholder="Search...">
-                <button class="btn btn-outline-dark ms-1"><i class="bi bi-search"></i></button>
-            </div>
+            <form action="?p=contacts" method="get">
+                <div class="d-flex">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Search..." value="<?= $search ?>">
+                    <button class="btn btn-outline-dark ms-1"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
         <?php endif; ?>
     </div>
     <div class="col text-end">
@@ -48,7 +56,11 @@ $count = count($contacts);
             <?php foreach ($contacts as $contact) : ?>
                 <tr>
                     <td class="align-middle">
-                        <img class="table-img" src="../inc/img/logo.png" alt="">
+                        <?php if ($contact->photo == null) : ?>
+                            <img class="table-img" src="../inc/img/default.png" alt="">
+                        <?php else : ?>
+                            <img class="table-img" src="../inc/img/contacts/<?= $contact->photo ?>" alt="">
+                        <?php endif; ?>
                     </td>
                     <td class="align-middle"><?= $contact->name ?></td>
                     <td class="align-middle"><?= $contact->phone ?></td>

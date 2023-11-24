@@ -224,13 +224,26 @@ class database
     //  contacts
     // =============================================================
 
-    public function selectContactsByUserID($user_id)
+    public function selectContactsByUserID($user_id, $search = null)
     {
-        $params = [
-            ':user_id' => $user_id
-        ];
+        if ($search == null) {
+            $params = [
+                ':user_id' => $user_id
+            ];
 
-        $sql = "SELECT * FROM contact WHERE user_id = :user_id AND deleted_at IS NULL ORDER BY name ASC";
+            $sql = "SELECT * FROM contact WHERE user_id = :user_id AND deleted_at IS NULL ORDER BY name ASC";
+        } else {
+            $params = [
+                ':user_id' => $user_id,
+                ':search' => "%$search%"
+            ];
+
+            $sql = "SELECT * FROM contact 
+                    WHERE user_id = :user_id 
+                    AND deleted_at IS NULL 
+                    AND (name LIKE :search OR email LIKE :search OR phone LIKE :search)
+                    ORDER BY name ASC";
+        }
         return $this->query($sql, $params);
     }
 
@@ -244,18 +257,30 @@ class database
         return $this->query($sql, $params);
     }
 
-    public function insertContact($name, $phone, $email, $photo, $user_id)
+    public function insertContact($name, $phone, $email, $user_id)
     {
         $params = [
             ':name' => $name,
             ':phone' => $phone,
             ':email' => $email,
-            ':photo' => $photo,
             ':user_id' => $user_id
         ];
 
-        $sql = "INSERT INTO contact (name, phone, email, photo, created_at, user_id)
-                VALUES (:name, :phone, :email, :photo, NOW(), :user_id)";
+        $sql = "INSERT INTO contact (name, phone, email, created_at, user_id)
+                VALUES (:name, :phone, :email, NOW(), :user_id)";
+        return $this->query($sql, $params);
+    }
+
+    public function insertPhoto($id){
+        $params = [
+            ':id' => $id,
+            ':photo' => "$id.png"
+        ];
+
+        $sql = "UPDATE contact
+                SET photo = :photo 
+                WHERE id = :id";
+                
         return $this->query($sql, $params);
     }
 

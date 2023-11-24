@@ -11,7 +11,7 @@ unset($_SESSION['error']);
     <div class="form-box">
         <h3 class="text-center">New Contact</h3>
         <hr>
-        <form action="?p=new_submit" method="post">
+        <form action="?p=new_submit" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="text_name" class="form-label">Name:</label>
                 <input type="text" name="text_name" id="text_name" class="form-control" placeholder="Insert contact name" required>

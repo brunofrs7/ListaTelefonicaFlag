@@ -10,7 +10,7 @@ defined('CONTROL') or die('Access denied');
                 <h1 class="modal-title fs-5" id="exampleModalLabel">New Contact</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="?p=new_submit" method="post">
+            <form action="?p=new_submit" method="post" enctype="multipart/form-data">
                 <div class="modal-body text-start">
                     <div class="mb-3">
                         <label for="text_name" class="form-label">Name:</label>
@@ -34,11 +34,12 @@ defined('CONTROL') or die('Access denied');
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-dark">Save</button>
                 </div>
-            </form>            <?php
+            </form>
+            <?php
             $error = $_SESSION['error'] ?? null;
             unset($_SESSION['error']);
-            
-            
+
+
             if (!empty($error)) : ?>
                 <div class="alert alert-danger mt-3 p-2 text-center" role="alert">
                     <?= $error ?>
