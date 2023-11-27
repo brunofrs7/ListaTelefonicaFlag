@@ -186,7 +186,7 @@ class database
             ':id' => $id
         ];
 
-        $sql = "SELECT name, email FROM user WHERE id = :id AND deleted_at IS NULL";
+        $sql = "SELECT name, email, photo FROM user WHERE id = :id AND deleted_at IS NULL";
         return $this->query($sql, $params);
     }
 
@@ -271,7 +271,8 @@ class database
         return $this->query($sql, $params);
     }
 
-    public function insertPhoto($id){
+    public function insertPhoto($id)
+    {
         $params = [
             ':id' => $id,
             ':photo' => "$id.png"
@@ -280,30 +281,53 @@ class database
         $sql = "UPDATE contact
                 SET photo = :photo 
                 WHERE id = :id";
-                
+
         return $this->query($sql, $params);
     }
 
-    public function updateContact($id, $name, $phone, $email, $photo, $user_id)
+    public function updateContact($id, $name, $phone, $email, $user_id, $photo = null)
+    {
+        if ($photo != null) {
+            $params = [
+                ':id' => $id,
+                ':name' => $name,
+                ':phone' => $phone,
+                ':email' => $email,
+                ':photo' => $photo,
+                ':user_id' => $user_id
+            ];
+
+            $sql = "UPDATE contact 
+                SET name = :name, phone = :phone, email = :email, photo = :photo, updated_at = NOW()
+                WHERE id = :id AND user_id = :user_id";
+        } else {
+            $params = [
+                ':id' => $id,
+                ':name' => $name,
+                ':phone' => $phone,
+                ':email' => $email,
+                ':user_id' => $user_id
+            ];
+
+            $sql = "UPDATE contact 
+                SET name = :name, phone = :phone, email = :email, updated_at = NOW()
+                WHERE id = :id AND user_id = :user_id";
+        }
+
+        return $this->query($sql, $params);
+    }
+
+    public function updateContactRemovePhoto($id, $user_id)
     {
         $params = [
             ':id' => $id,
-            ':name' => $name,
-            ':phone' => $phone,
-            ':email' => $email,
-            ':photo' => $photo,
             ':user_id' => $user_id
         ];
 
         $sql = "UPDATE contact 
-                SET name = :name, phone = :phone, email = :email, photo = :photo, updated_at = NOW()
+                SET photo = NULL, updated_at = NOW()
                 WHERE id = :id AND user_id = :user_id";
-
         return $this->query($sql, $params);
-    }
-
-    public function updateContactRemovePhoto()
-    {
     }
 
     public function softDeleteContact($id, $user_id)
@@ -314,7 +338,7 @@ class database
         ];
 
         $sql = "UPDATE contact 
-                SET deleted_at = NOW()
+                SET deleted_at = NOW(), photo = NULL
                 WHERE id = :id AND user_id = :user_id";
 
         return $this->query($sql, $params);

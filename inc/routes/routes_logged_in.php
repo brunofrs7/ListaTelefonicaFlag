@@ -12,6 +12,7 @@ return [
 
     'edit',
     'edit_submit',
+    'remove_image_submit',
 
     'delete',
     'delete_submit',

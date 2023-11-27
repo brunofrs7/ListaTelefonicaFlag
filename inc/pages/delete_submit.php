@@ -22,6 +22,9 @@ $db = new database();
 //$res = $db->deleteContact($id, $user_id);
 $res = $db->softDeleteContact($id, $user_id);
 
+// delete image
+functions::removeImage($id);
+
 if ($res['affectedRows'] == 1) {
     header('Location: ?p=contacts');
 } else {

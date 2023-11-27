@@ -1,13 +1,10 @@
-EDIT
-- edição da imagem (carregamento, eliminação)
-
-DATABASE
-- updateContact - alterar para gerir photo
-- updateContactRemovePhoto - implementar
-
 PROFILE
-- implementar
+- alterar nome e email
+- alterar photo
+- alterar password
+- eliminar conta
 
 LOG
 - implementar
 
+Variáveis globais para imagens + configs

@@ -14,6 +14,16 @@ class functions
         return implode($pass);
     }
 
+    public static function removeImage($id){
+        $target_dir = "../inc/img/contacts/";
+        $target_file = $target_dir . $id . ".png";
+        if (file_exists($target_file)) {
+            unlink($target_file);
+            return true;
+        }
+        return false;
+    }
+
     public static function uploadImage($new_contact_id, $photo)
     {
         // https://www.w3schools.com/php/php_file_upload.asp

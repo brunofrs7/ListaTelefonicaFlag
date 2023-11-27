@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $name = $_POST['text_name'] ?? null;
 $phone = $_POST['text_phone'] ?? null;
 $email = $_POST['text_email'] ?? null;
-$photo = $_FILES["photo"];
+$photo = $_FILES["photo"] ?? null;
 
 $user_id = $_SESSION['id'] ?? null;
 
@@ -26,17 +26,20 @@ $db = new database();
 $res = $db->insertContact($name, $phone, $email, $user_id);
 $new_contact_id = $res['lastID'];
 
+$resPhoto['status'] = 'success';
+
 //upload da foto
-$resUpload = functions::uploadImage($new_contact_id, $photo);
+if ($photo['size'] > 0) {
+    $resUpload = functions::uploadImage($new_contact_id, $photo);
 
-if ($resUpload['status'] == 'error') {
-    $_SESSION['error'] = $resUpload['message'];
-    header('Location: ?p=new');
-    exit();
+    if ($resUpload['status'] == 'error') {
+        $_SESSION['error'] = $resUpload['message'];
+        header('Location: ?p=new');
+        exit();
+    }
+
+    $resPhoto = $db->insertPhoto($new_contact_id);
 }
-
-$resPhoto = $db->insertPhoto($new_contact_id);
-
 if ($res['status'] == 'success' && $resPhoto['status'] == 'success') {
     header('Location: ?p=contacts');
 } else {
