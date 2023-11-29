@@ -1,0 +1,4 @@
+[2023-11-29T20:41:13.253528+00:00] LOG.INFO: User Profile data updated {"user_id":7} []
+[2023-11-29T20:55:53.961322+00:00] LOG.EMERGENCY: Access denied to not allowed route {"user_id":7} []
+[2023-11-29T21:06:56.474043+00:00] LOG.INFO: User Profile data updated {"user_id":7} []
+[2023-11-29T21:06:57.528254+00:00] LOG.INFO: User Profile data updated {"user_id":7} []

@@ -4,3 +4,13 @@ function showEdit(){
     document.getElementById("text_profile_name").removeAttribute('readonly');
     document.getElementById("text_profile_email").removeAttribute('readonly');
 }
+
+const toastTrigger = document.getElementById('liveToastBtn')
+const toastLiveExample = document.getElementById('liveToast')
+
+if (toastTrigger) {
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+  toastTrigger.addEventListener('click', () => {
+    toastBootstrap.show()
+  })
+}

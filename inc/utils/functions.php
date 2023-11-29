@@ -10,7 +10,7 @@ class functions
     {
         // create a log channel
         $log = new Logger('LOG');
-        $log->pushHandler(new StreamHandler('mylog.log'));
+        $log->pushHandler(new StreamHandler(LOG_DIR));
 
         // add records to the log
 
@@ -59,7 +59,7 @@ class functions
 
     public static function removeImage($id, $folder = "contacts")
     {
-        $target_dir = "../inc/img/$folder/";
+        $target_dir = IMG_DIR."$folder/";
         $target_file = $target_dir . $id . ".png";
         if (file_exists($target_file)) {
             unlink($target_file);
@@ -72,7 +72,7 @@ class functions
     {
         // https://www.w3schools.com/php/php_file_upload.asp
 
-        $target_dir = "../inc/img/$folder/";
+        $target_dir = IMG_DIR."$folder/";
         $target_file = $target_dir . $new_contact_id . ".png";
 
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -84,7 +84,7 @@ class functions
                 //echo "File is an image - " . $check["mime"] . ".";
             } else {
                 return [
-                    'status' => 'error',
+                    'status' => ERROR,
                     'message' => "File is not an image."
                 ];
             }
@@ -98,7 +98,7 @@ class functions
         // Check file size
         if ($photo["size"] > 5000000000) {
             return [
-                'status' => 'error',
+                'status' => ERROR,
                 'message' => "Sorry, your file is too large."
             ];
         }
@@ -109,19 +109,19 @@ class functions
             && $imageFileType != "gif"
         ) {
             return [
-                'status' => 'error',
+                'status' => ERROR,
                 'message' => "Sorry, only JPG, JPEG, PNG & GIF files are allowed."
             ];
         }
 
         if (move_uploaded_file($photo["tmp_name"], $target_file)) {
             return [
-                'status' => 'success',
+                'status' => SUCCESS,
                 'message' => "The file " . htmlspecialchars(basename($photo["name"])) . " has been uploaded."
             ];
         } else {
             return [
-                'status' => 'error',
+                'status' => ERROR,
                 'message' => "Sorry, there was an error uploading your file."
             ];
         }

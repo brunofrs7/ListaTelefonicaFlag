@@ -1,4 +1,0 @@
-LOG
-- implementar
-
-Variáveis globais para imagens + configs

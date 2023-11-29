@@ -48,7 +48,7 @@ $profile = $res['data'][0];
                 <input type="email" name="text_profile_email" id="text_profile_email" class="form-control" placeholder="Insert your email" value="<?= $profile->email ?>" required readonly>
             </div>
             <div class="mb-3" id="div_profile_edit">
-                <button type="button" class="btn btn-primary" onclick="showEdit()">Edit</button>
+                <button type="button" class="btn btn-primary" onclick="showEdit()" id="liveToastBtn">Edit</button>
             </div>
             <div class="mb-3" id="div_profile_save_cancel">
                 <button type="submit" class="btn btn-success">Save</button>
@@ -75,7 +75,22 @@ $profile = $res['data'][0];
         <?= $success ?>
     </div>
 <?php endif; ?>
+<!-- TOAST EXAMPLE -->
 
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="../inc/img/logo.png" class="rounded me-2 w-25" alt="...">
+            <strong class="me-auto">Contacts APP</strong>
+            <small>right now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Modo de edição ativo!!
+        </div>
+    </div>
+</div>
+<!-- END TOAST EXAMPLE -->
 <?php
 require('profile_change_image_modal.php');
 require('profile_change_password_modal.php');

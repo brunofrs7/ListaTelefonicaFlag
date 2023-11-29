@@ -18,26 +18,25 @@ if (isset($_SESSION['id'])) {
 $page = $_GET['p'] ?? null;
 
 // load functions
+require_once __DIR__ . "/../inc/utils/config.php";
 require_once __DIR__ . '/../inc/vendor/autoload.php';
 require_once __DIR__ . "/../inc/utils/functions.php";
 
 // if user is logged out and trying to access not allowed route
 if (!isset($_SESSION['id']) && !in_array($page, $allowed_routes)) {
     $page = 'signin';
-    functions::logger('Access denied to not allowed route','warning');
+    functions::logger('Access denied to not allowed route', 'warning');
 }
 
 // if user is logged in and trying to access not allowed route
 if (isset($_SESSION['id']) && !in_array($page, $allowed_routes)) {
     $page = 'contacts';
-    functions::logger('Access denied to not allowed route','emergency',['user_id' => $_SESSION['id']]);
+    functions::logger('Access denied to not allowed route', 'emergency', ['user_id' => $_SESSION['id']]);
 }
 
 // load database
 require_once __DIR__ . "/../inc/db/config.php";
 require_once __DIR__ . "/../inc/db/database.php";
-
-
 
 // load page parts
 require_once __DIR__ . '/../inc/content/head.php';
