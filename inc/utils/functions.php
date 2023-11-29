@@ -1,7 +1,50 @@
 <?php
 
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 class functions
 {
+    public static function logger($message, $mode, $params = [])
+    {
+        // create a log channel
+        $log = new Logger('LOG');
+        $log->pushHandler(new StreamHandler('mylog.log'));
+
+        // add records to the log
+
+        switch ($mode) {
+            case 'debug':
+                $log->debug($message, $params);
+                break;
+            case 'info':
+                $log->info($message, $params);
+                break;
+            case 'notice':
+                $log->notice($message, $params);
+                break;
+            case 'warning':
+                $log->warning($message, $params);
+                break;
+            case 'error':
+                $log->error($message, $params);
+                break;
+            case 'critical':
+                $log->critical($message, $params);
+                break;
+            case 'alert':
+                $log->alert($message, $params);
+                break;
+            case 'emergency':
+                $log->emergency($message, $params);
+                break;
+            default:
+                $log->info($message, $params);
+                break;
+        }
+    }
+
     public static function generateLink($size = 100)
     {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';

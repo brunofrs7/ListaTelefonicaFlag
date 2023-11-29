@@ -21,6 +21,7 @@ if (empty($id) || empty($name) || empty($email)) {
 
 $db = new database();
 $res = $db->updateUser($id, $name, $email);
+functions::logger('User Profile data updated', 'info', ['user_id' => $id]);
 
 if ($res['affectedRows'] == 1) {
     $_SESSION['success'] = 'Success editing contact';

@@ -1,0 +1,7 @@
+[2023-11-29T20:13:43.636061+00:00] LOG.INFO: User Profile data updated {"user_id":7} []
+[2023-11-29T20:13:49.239199+00:00] LOG.INFO: User Profile data updated {"user_id":7} []
+[2023-11-29T20:13:54.536431+00:00] LOG.WARNING: User Profile data updated {"user_id":7} []
+[2023-11-29T20:17:51.312652+00:00] LOG.WARNING: Access denied to not allowed route [] []
+[2023-11-29T20:18:02.163794+00:00] LOG.EMERGENCY: Access denied to not allowed route {"user_id":7} []
+[2023-11-29T20:18:20.302031+00:00] LOG.EMERGENCY: Access denied to not allowed route {"user_id":7} []
+[2023-11-29T20:19:17.387678+00:00] LOG.INFO: User Profile data updated {"user_id":7} []
