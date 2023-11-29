@@ -25,3 +25,7 @@ body{
     height: 50px;
     border-radius: 50%;
 }
+
+#div_profile_save_cancel{
+    display: none;
+}

@@ -204,6 +204,36 @@ class database
         return $this->query($sql, $params);
     }
 
+    public function updateImageUser($id)
+    {
+        $params = [
+            ':id'        => $id,
+            ':photo'     => "$id.png"
+        ];
+
+        $sql = "UPDATE user 
+                SET photo = :photo, updated_at = NOW()
+                WHERE id = :id ";
+
+        return $this->query($sql, $params);
+    }
+
+    public function updatePasswordUser($id, $new_password)
+    {
+        $password_enc = password_hash($new_password, PASSWORD_DEFAULT);
+
+        $params = [
+            ':id'        => $id,
+            ':password'  => $password_enc,
+        ];
+
+        $sql = "UPDATE user 
+                SET password = :password, updated_at = NOW()
+                WHERE id = :id ";
+
+        return $this->query($sql, $params);
+    }
+
     public function updatePassword($email_recover, $new_password)
     {
         $password_enc = password_hash($new_password, PASSWORD_DEFAULT);
@@ -216,6 +246,58 @@ class database
         $sql = "UPDATE user 
                 SET email_recover = NULL, password = :password, updated_at = NOW()
                 WHERE email_recover = :email_recover ";
+
+        return $this->query($sql, $params);
+    }
+
+    public function updateUser($id, $name, $email)
+    {
+        $params = [
+            ':id'     => $id,
+            ':name'   => $name,
+            ':email'  => $email,
+        ];
+
+        $sql = "UPDATE user 
+                SET name = :name, email = :email, updated_at = NOW()
+                WHERE id = :id ";
+
+        return $this->query($sql, $params);
+    }
+
+    public function updateUserRemovePhoto($id)
+    {
+        $params = [
+            ':id' => $id,
+        ];
+
+        $sql = "UPDATE user 
+                SET photo = NULL, updated_at = NOW()
+                WHERE id = :id";
+        return $this->query($sql, $params);
+    }
+
+    public function softDeleteUser($id)
+    {
+        $params = [
+            ':id'     => $id,
+        ];
+
+        $sql = "UPDATE user 
+                SET deleted_at = NOW()
+                WHERE id = :id ";
+
+        return $this->query($sql, $params);
+    }
+
+    public function deleteUser($id)
+    {
+        $params = [
+            ':id'     => $id,
+        ];
+
+        $sql = "DELETE user 
+                WHERE id = :id ";
 
         return $this->query($sql, $params);
     }

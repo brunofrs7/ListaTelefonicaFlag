@@ -14,8 +14,9 @@ class functions
         return implode($pass);
     }
 
-    public static function removeImage($id){
-        $target_dir = "../inc/img/contacts/";
+    public static function removeImage($id, $folder = "contacts")
+    {
+        $target_dir = "../inc/img/$folder/";
         $target_file = $target_dir . $id . ".png";
         if (file_exists($target_file)) {
             unlink($target_file);
@@ -24,11 +25,11 @@ class functions
         return false;
     }
 
-    public static function uploadImage($new_contact_id, $photo)
+    public static function uploadImage($new_contact_id, $photo, $folder = "contacts")
     {
         // https://www.w3schools.com/php/php_file_upload.asp
 
-        $target_dir = "../inc/img/contacts/";
+        $target_dir = "../inc/img/$folder/";
         $target_file = $target_dir . $new_contact_id . ".png";
 
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
